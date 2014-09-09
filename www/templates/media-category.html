@@ -1,0 +1,18 @@
+<div class="media-block">
+    <div class="media-cateogry">
+            <img src="{{IMAGE}}"/>
+        <div class="category-info">
+            <h2>{{NAME}}</h2>
+            <h4>{{AUTHORS}}</h4>
+        </div>
+        <div class="clear-fix"></div>
+    </div>
+    <div class="media-messages">
+        {{#MESSAGES}}
+        <div class="media-message">
+            <a href="#" class="message-title" data-id="{{ID}}">{{NAME}}</a>
+            <a href="#" class="message-date" data-id="{{ID}}">{{DATE}}</a>
+        </div>
+        {{/MESSAGES}}
+    </div>
+</div>
