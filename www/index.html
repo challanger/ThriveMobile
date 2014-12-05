@@ -1,113 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="thriveMobileApp">
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <meta name="msapplication-tap-highlight" content="no" />
         <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/slick.css"/>
-        <script type="text/javascript" src="js/slick.min.js"></script>
-        <!--<script type="text/javascript" src="js/angular.min.js"></script>-->
-        <script type="text/javascript" src="js/mustache.js"></script>
+        <!--<script type="text/javascript" src="js/slick.min.js"></script>-->
+        <script type="text/javascript" src="js/angular.js"></script>
+        <script type="text/javascript" src="js/loading.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/slider.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+        <!--<script type="text/javascript" src="js/mustache.js"></script>-->
         <title>Thrive</title>
     </head>
-    <body>
-        <div class="main main-active" id="main-home">
-            <div class="header">
-                Home
+    <body ng-controller="tabController as tabCtrl">
+        <div ng-controller="MessageController as messageCtrl">
+            <div class="main" ng-class="{mainActive:tabCtrl.isSet(0)}" id="main-home">
+                <div class="header">
+                    Home
+                </div> 
+
+                <div class="content">
+                    <div class="news-slides" ng-controller="SlidesController as slideCtrl" >
+                        <div class="news-slide" ng-repeat="slide in slideCtrl.slides" on-last-repeat>
+                            <div class="news-slide-inner">
+                                <img ng-src="{{slide.imageurl}}">
+                                <div class="news-caption">{{slide.caption}}</div>
+                            </div>
+                        </div>
+                        <div class="clear-fix"></div>
+                    </div>
+                    <div class="clear-fix"></div>
+                </div>
             </div>
-            
-            <div class="content">
-                <div class="news-slides">
-                    <div class="news-slide">
-                        <div class="news-slide-inner">
-                            <img src="img/slides/app_news_grace.png">
-                            <div class="news-caption"></div>
+
+            <div class="main"  ng-class="{mainActive:tabCtrl.isSet(1)}" id="main-connect">
+                <div class="header">
+                    Connect
+                </div>
+
+                <div class="content">
+                    <div class="connect-block">
+                        <h2>Service Time:</h2>
+                        <div class="connect-inner">
+                            <a href="#"><img src="img/clock.png"/> <div class="connect-desc">Sunday at 11am</div></a>
                         </div>
                     </div>
-                    <div class="news-slide">
-                        <div class="news-slide-inner">
-                            <img src="img/slides/app_news_grace.png">
-                            <div class="news-caption"></div>
+                    <div class="connect-block">
+                        <h2>Address</h2>
+                        <div class="connect-inner">
+                            <a onclick='window.open("https://www.google.ca/maps/place/15+Harmony+Rd+N,+Oshawa,+ON+L1G+6K8/@43.9048207,-78.8339833,17z/data=!3m1!4b1!4m2!3m1!1s0x89d5033413572903:0x4dac34cbdc34c48b", "_system")'><img src="img/compas.png"/> <div class="connect-desc">15 Harmony Rd. N  in Oshawa</div></a>
+                        </div>
+                    </div>
+                    <div class="connect-block">
+                        <h2>Connect With Us</h2>
+                        <div class="connect-inner">
+                            <a onclick='window.open("http://twitter.com/ithrivecc/", "_system")'><img src="img/twitter.png"/> <div class="connect-desc">twitter.com/ithrivecc/</div></a>
+                        </div>
+                        <div class="connect-inner">
+                            <a onclick='window.open("http://facebook.com/ithrivecc", "_system")'><img src="img/facebook.png"/> <div class="connect-desc">facebook.com/ithrivecc</div></a>
+                        </div>
+                        <div class="connect-inner">
+                            <a href="mailTo:info@ithrive.ca"><img src="img/envelope.png"/> <div class="connect-desc">info@ithrive.ca</div></a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="main" id="main-connect">
-            <div class="header">
-                Connect
-            </div>
-            
-            <div class="content">
-                <div class="connect-block">
-                    <h2>Service Time:</h2>
-                    <div class="connect-inner">
-                        <div class="connect-desc">Sunday at 11am</div>
-                    </div>
+
+            <div class="main scrollable"  ng-class="{mainActive:tabCtrl.isSet(2)}" id="main-media">
+                <div class="header">
+                    Media
                 </div>
-                <div class="connect-block">
-                    <h2>Address</h2>
-                    <div class="connect-inner">
-                        <a href="#"><img src="img/compas.png"/> 15 Harmony Rd. N  in Oshawa</a>
-                    </div>
-                </div>
-                <div class="connect-block">
-                    <h2>Connect With Us</h2>
-                    <div class="connect-inner">
-                        <a href="http://twitter.com/ithrivecc/"><img src="img/twitter.png"/> <div class="connect-desc">twitter.com/ithrivecc/</div></a>
-                    </div>
-                    <div class="connect-inner">
-                        <a href="http://facebook.com/ithrivecc"><img src="img/facebook.png"/> <div class="connect-desc">facebook.com/ithrivecc</div></a>
-                    </div>
-                    <div class="connect-inner">
-                        <a href="mailTo:info@ithrive.ca"><img src="img/envelope.png"/> <div class="connect-desc">info@ithrive.ca</div></a>
+
+                <div class="content" ng-controller="MediaController as mediaCtrl">
+                    <div class="media-block" ng-repeat="media in mediaCtrl.media | orderBy:'date':true">
+                        <div class="media-cateogry">
+                                <img ng-src="{{media.imageurl}}"/>
+                            <div class="category-info">
+                                <h2>{{media.title}}</h2>
+                                <h4>{{media.author}}</h4>
+                            </div>
+                            <div class="clear-fix"></div>
+                        </div>
+                        <div class="media-messages">
+                            <div class="media-message" ng-repeat="message in media.messages | orderBy:'date'">
+                                <a href="#" class="message-title" data-id="{{message.id}}" ng-click="messageCtrl.getMessage(message.id); tabCtrl.setActiveSlide(3)">{{message.title}}</a>
+                                <a href="#" class="message-date" data-id="{{message.id}}" ng-click="messageCtrl.getMessage(message.id); tabCtrl.setActiveSlide(3)">{{message.date | date}}</a>
+                                <div class="clear-fix"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="main" id="main-media">
-            <div class="header">
-                Media
-            </div>
-            
-            <div class="content">
+
+            <div class="main"   ng-class="{mainActive:tabCtrl.isSet(3)}" id="main-message">
                 
+                <div class="back-header">
+                    <a class="back-button" ng-click="tabCtrl.setActiveSlide(2); messageCtrl.stopMedia()">< back</a>
+                </div>
+                <div class="header">
+                    Media
+                </div>
+
+                <div class="content">
+                    <div class="media-block">
+                        <div class="media-message-info">
+                            <img ng-src="{{messageCtrl.message.category.imageurl}}"/>
+                            <div class="message-full-title">
+                                <h2>{{messageCtrl.message.message.title}}</h2>
+                            </div>
+                            <div class="category-info">
+                                <h2>{{messageCtrl.message.category.title}}</h2>
+                                <h4>{{messageCtrl.message.category.author}}</h4>
+                            </div>
+                            <div class="clear-fix"></div>
+                        </div>
+                        <div class="media-message-player">
+                            <div class="media-message-button" ng-click="messageCtrl.playMedia()">
+                                <img ng-src="{{messageCtrl.mediaControlIcon}}"/>
+                            </div>
+                            <div class="media-message-progress-container">
+                                <div class="media-message-progress-bar" style="width: {{messageCtrl.mediaInfo.curPer}}%;"></div>
+                            </div>
+                            <div class="media-message-time">{{messageCtrl.mediaInfo.curPose}}/{{messageCtrl.mediaInfo.duration}}</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-        
-        <div class="main" id="main-message">
-            <div class="header">
-                Media
+
+            <div class="loading-bar">
+                <div class="loading-left loading-bar-inner"></div>
+                <div class="loading-right loading-bar-inner"></div>
             </div>
-            
-            <div class="content">
-                
-            </div>
-        </div>
-        
-        
-        <div class="tab-bar">
-            <div class="tab-item tab-active" id="tab-home" data-main="main-home">
-                <div class="tab-graphic"></div>
-                <div class="tab-name">Home</div>
-            </div>
-            <div class="tab-item" id="tab-connect" data-main="main-connect">
-                <div class="tab-graphic"></div>
-                <div class="tab-name">Connect</div>
-            </div>
-            <div class="tab-item" id="tab-media" data-main="main-media">
-                <div class="tab-graphic"></div>
-                <div class="tab-name">Media</div>
+            <div class="tab-bar">
+                <div class="tab-item"  ng-class="{tabActive:tabCtrl.isSet(0)}" ng-click="tabCtrl.setActiveSlide(0)" id="tab-home" data-main="main-home">
+                    <div class="tab-graphic"></div>
+                    <div class="tab-name">Home</div>
+                </div>
+                <div class="tab-item"  ng-class="{tabActive:tabCtrl.isSet(1)}" ng-click="tabCtrl.setActiveSlide(1)" id="tab-connect" data-main="main-connect">
+                    <div class="tab-graphic"></div>
+                    <div class="tab-name">Connect</div>
+                </div>
+                <div class="tab-item"  ng-class="{tabActive:tabCtrl.isSet(2) || tabCtrl.isSet(3)}" ng-click="tabCtrl.setActiveSlide(2)" id="tab-media" data-main="main-media">
+                    <div class="tab-graphic"></div>
+                    <div class="tab-name">Media</div>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        
         <script type="text/javascript">
             //app.initialize();
         </script>

@@ -73,6 +73,11 @@ body {
     clear:both;
 }
 
+.scrollable {
+    -webkit-overflow-scrolling: touch;
+    overflow-y:auto;
+}
+
 .header {
     background-color: #09a05a;
     font-family: jura,​sans-serif;
@@ -82,7 +87,7 @@ body {
     text-align: center;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-top: 15px;
+    margin-top: 25px;
     margin-bottom: 15px;
     
     -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.6);
@@ -108,28 +113,70 @@ body {
     font-size: 0.7em;
 }
 
-.tab-active {
+.tabActive {
     color:#ffffff;
+}
+
+.loading-bar { 
+    width: 100%; 
+    height: 5px; 
+    bottom: 50px; 
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: 1s ease-in-out; 
+    -moz-transition: 1s ease-in-out; 
+    -o-transition: 1s ease-in-out; 
+    transition: 1s ease-in-out;
+}
+.loading-bar-inner { 
+    height: 100%; 
+    width: 50%; 
+    display: inline-block; 
+    float: left;
+    -webkit-transition: 1s ease-in-out; 
+    -moz-transition: 1s ease-in-out; 
+    -o-transition: 1s ease-in-out; 
+    transition: 1s ease-in-out;
+}
+.loading-right { 
+    background: -webkit-linear-gradient(left, #09a05a , #FFFFFF); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(left, #09a05a, #FFFFFF); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(left, #09a05a, #FFFFFF); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(left, #09a05a , #FFFFFF); /* Standard syntax */
+    /*background-color: #09a05a;*/
+    
+    transform-origin: left;
+}
+.loading-left { 
+    background: -webkit-linear-gradient(right, #09a05a , #FFFFFF); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #09a05a, #FFFFFF); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #09a05a, #FFFFFF); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(right, #09a05a , #FFFFFF); /* Standard syntax */
+    transform-origin: right;
+}
+
+.animate-loading {
+    transform: scaleX(0);
 }
 
 #tab-home .tab-graphic {
     background-image: url("../img/home.png");
 }
-.tab-active#tab-home .tab-graphic {
+.tabActive#tab-home .tab-graphic {
     background-image: url("../img/home-active.png");
 }
 
 #tab-connect .tab-graphic {
     background-image: url("../img/at.png");
 }
-.tab-active#tab-connect .tab-graphic {
+.tabActive#tab-connect .tab-graphic {
     background-image: url("../img/at-active.png");
 }
 
 #tab-media .tab-graphic {
     background-image: url("../img/media.png");
 }
-.tab-active#tab-media .tab-graphic {
+.tabActive#tab-media .tab-graphic {
     background-image: url("../img/media-active.png");
 }
 
@@ -148,30 +195,40 @@ body {
     padding-bottom: 50px;
 }
 
-.main-active {
+.mainActive {
     display: block;
 }
 
+#main-home .content { 
+    position: absolute; 
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    padding-bottom: 70px;
+    padding-top: 100px;
+    overflow: hidden; 
+}
+
 .news-slides {
+    height: 100%;
     position: relative;
-    width: 100%;
+    
+    -webkit-transition: 1.5s ease-in-out; 
+    -moz-transition: 1.5s ease-in-out; 
+    -o-transition: 1.5s ease-in-out; 
+    transition: 1.5s ease-in-out;
 }
 
 .news-slide {
-   /* display: inline-block;
-    position: relative;
-    width: 70%;
+    display: block;
+    float: left;
     margin-left: 10px;
-    margin-right: 10px;*/
-    /*max-width:500px;
-    padding-left:15px;
-    padding-right:15px;*/
-    max-height: 80%;
+    margin-right: 10px;
 }
 
 .news-slide-inner {
-    margin-left: 10px;
-    margin-right: 10px;
+    display: block;
 }
 
 .news-caption {
@@ -189,7 +246,7 @@ body {
 .connect-block {
     color: #292828;
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 .connect-block h2 {
@@ -202,6 +259,7 @@ body {
     padding-left: 20px;
     padding-bottom: 10px;
     font-family: Arial;
+    position: relative;
 }
 
 .connect-inner img {
@@ -213,6 +271,7 @@ body {
 .connect-inner a {
     color: #292828;
     text-decoration: none;
+    display: block;
 }
 
 .connect-inner a:hover {
@@ -221,7 +280,8 @@ body {
 
 .connect-desc {
     display: inline-block;
-    padding-bottom: 0.3em;
+    top: 5px;
+    position: absolute;
 }
 
 .media-block {
@@ -254,7 +314,7 @@ body {
 
 .category-info h2 {
     margin-top: 0px;
-    margin-bottom: 7px;
+    margin-bottom: 2px;
 }
 
 .category-info h4 {
@@ -271,9 +331,10 @@ body {
 }
 
 .media-message {
-    padding: 10px;
+    padding: 15px 10px;
     /*width: 100%;*/
     font-weight: bold;
+    font-size: 14px;
 }
 
 .media-message:nth-child(odd) {
@@ -296,21 +357,25 @@ body {
 
 .message-title {
     display: inline-block;
-    width: 80%;
+    width: 64%;
     height: 14px;
     overflow:hidden;
     text-overflow:ellipsis;
+    float: left;
 }
 
 .message-date {
     display: inline-block;
-    width: 18%;
+    width: 34%;
     text-align: right;
+    float:left;
+    height: 14px;
 }
 
 .media-message-info {
     margin-bottom: 10px;
     position: relative;
+    line-height: 1.4em;
 }
 
 .media-message-info .message-full-title {
@@ -320,11 +385,72 @@ body {
 }
 .media-message-info .category-info {
     position: absolute;
-    bottom: 0px;
+    top: 70px;
     left: 110px;
 }
 
 .message-full-title h2 {
     margin-top: 0px;
     margin-bottom: 7px;
+    max-height: 36px;
+}
+
+.media-message-player { 
+    width: 100%;
+    position: relative;
+    margin-top: 30px;
+}
+
+.media-message-button { 
+    display: inline-block;
+    width: 35px;
+}
+.media-message-button img { 
+    max-width: 100%; 
+}
+
+.media-message-time { 
+    display: inline-block;
+    width: 70px;
+    margin-left: 5px;
+    margin-top: 14px;
+    font-size: 0.8em;
+    position: absolute;
+}
+
+.media-message-progress-container {
+    display: inline-block;
+    height: 100%;
+    position: relative;
+    margin-bottom: 15px;
+    height: 4px;
+    width: 270px;
+    max-width: 70%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.media-message-progress-bar { 
+    display: inline-block;
+    height: 100%;
+    background-color: #09a05a;
+    position: absolute;
+}
+
+.back-header {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    margin-top: 20px;
+}
+a.back-button {
+    color: #fcfffd;
+    font-weight: bold;
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+#main-message .header { 
+    margin-top: 10px;
 }
